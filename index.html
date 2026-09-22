@@ -1,0 +1,507 @@
+﻿<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Decong HF">
+<meta name="theme-color" content="#FAF9F7">
+<script data-iphone="sentinella">
+(function(){
+var h=document.documentElement, msg="";
+function ha(c){ return (" "+h.className+" ").indexOf(" "+c+" ")>=0; }
+// L'errore puo' arrivare prima che l'avviso esista — uno script in <head> che
+// non si lascia leggere —: il messaggio si tiene da parte e si scrive quando
+// la pagina c'e'.
+function scrivi(){
+  var e=document.getElementById("nmerr");
+  if(e&&msg) e.textContent="Errore del motore: "+msg;
+}
+function ko(m){
+  if(m&&!msg) msg=m;
+  if(!ha("motore-ko")) h.className+=" motore-ko";
+  scrivi();
+}
+h.className+=" js";
+window.onerror=function(m,src,riga,col){
+  m=String(m);
+  if(/^Script error\.?$/.test(m)) m="il browser non ne mostra il dettaglio (\u00abScript error.\u00bb)";
+  ko(m+(riga?" (riga "+riga+(col?", colonna "+col:"")+")":""));
+};
+document.addEventListener("DOMContentLoaded",function(){
+  if(!ha("motore-ok")) ko(msg||"il motore non ha completato l'avvio"); else scrivi();
+});
+})();
+</script>
+<title>Decongestione nel DHF — scompenso cardiaco, ESC 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  :root {
+    --bg:#FAF9F7; --surface:#FFFFFF; --surface-alt:#F3F2EF;
+    --border:rgba(11,11,11,0.10); --border-strong:rgba(11,11,11,0.18);
+    --text-primary:#0B0B0B; --text-secondary:#52514E; --text-muted:#76746F;
+    --accent-blue:#2A78D6;   --accent-blue-bg:#E6F1FB;   --accent-blue-border:#B5D4F4;
+    --accent-amber:#BA7517;  --accent-amber-bg:#FAEEDA;  --accent-amber-border:#FAC775;
+    --accent-red:#A32D2D;    --accent-red-bg:#FCEBEB;    --accent-red-border:#F7C1C1;
+    --accent-green:#3B6D11;  --accent-green-bg:#EAF3DE;  --accent-green-border:#C0DD97;
+    --accent-purple:#534AB7; --accent-purple-bg:#EEEDFE; --accent-purple-border:#CECBF6;
+    --cor-1:#3B8E5A; --cor-2a:#E0A82E; --cor-2b:#DE7E3C; --cor-3:#B33A3A;
+    --k0:#2E7D4F; --k0-bg:#E2F3E8; --k0-bd:#A6D9B8;
+    --k1:#2A78D6; --k1-bg:#E3EFFB; --k1-bd:#A9CBF1;
+    --k2:#8A6A00; --k2-bg:#FBF3C8; --k2-bd:#EBD56C;
+    --k3:#B45309; --k3-bg:#FDEBD8; --k3-bd:#F4BD85;
+    --k4:#A32D2D; --k4-bg:#FCE3E3; --k4-bd:#F0A9A9;
+    --grid:rgba(42,120,214,.08);
+    --font:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    --display:'IBM Plex Sans Condensed','Arial Narrow',-apple-system,'Segoe UI',sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,Consolas,'Courier New',monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#111418; --surface:#181C22; --surface-alt:#20252D;
+      --border:rgba(255,255,255,.10); --border-strong:rgba(255,255,255,.19);
+      --text-primary:#E7EAEE; --text-secondary:#B8BEC7; --text-muted:#949BA5;
+      --accent-blue:#72AAEE;   --accent-blue-bg:#18283A;   --accent-blue-border:#2E4B6C;
+      --accent-amber:#E3A94F;  --accent-amber-bg:#30250F;  --accent-amber-border:#5D4719;
+      --accent-red:#EF8E8E;    --accent-red-bg:#361B1B;    --accent-red-border:#6B3232;
+      --accent-green:#95C873;  --accent-green-bg:#1C2A13;  --accent-green-border:#3C5626;
+      --accent-purple:#ADA6F2; --accent-purple-bg:#23213B; --accent-purple-border:#454077;
+      --k0:#8FD3A8; --k0-bg:#132B1D; --k0-bd:#2D5A3E;
+      --k1:#8EC0F5; --k1-bg:#16283C; --k1-bd:#2F5378;
+      --k2:#EDD36A; --k2-bg:#2C260C; --k2-bd:#5E5120;
+      --k3:#F3B27A; --k3-bg:#33210F; --k3-bd:#6B4524;
+      --k4:#F29A9A; --k4-bg:#361B1B; --k4-bd:#6B3232;
+      --grid:rgba(114,170,238,.07);
+      color-scheme:dark;
+    }
+  }
+  body { font-family:var(--font); background:var(--bg); color:var(--text-primary); font-size:14.5px; line-height:1.65; -webkit-font-smoothing:antialiased; }
+  .page { max-width:960px; margin:0 auto; padding:0 16px 4rem; }
+  strong, b { font-weight:600; }
+  .muted { color:var(--text-muted); }
+  .hero { margin:0 -16px 0; padding:2.2rem 16px 1.3rem; border-bottom:1px solid var(--border);
+          background-color:var(--bg);
+          background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+          background-size:22px 22px; }
+  .kicker { font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--accent-blue); margin-bottom:8px; }
+  .headline { font-family:var(--display); font-size:30px; font-weight:700; line-height:1.12; margin-bottom:10px; }
+  .lede { font-size:14.5px; color:var(--text-secondary); max-width:760px; margin-bottom:12px; }
+  .lede strong { color:var(--text-primary); }
+  .meta-row { display:flex; flex-wrap:wrap; gap:6px 8px; font-size:12px; }
+  .meta-chip { background:var(--surface); border:1px solid var(--border-strong); border-radius:99px; padding:2px 10px; color:var(--text-secondary); overflow-wrap:anywhere; }
+  .meta-chip strong { color:var(--text-primary); }
+  .bar { position:-webkit-sticky; position:-webkit-sticky;position:sticky; top:0; z-index:30; background:var(--bg); border-bottom:1px solid var(--border-strong);
+         margin:0 -16px 1.2rem; padding:8px 16px; display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px; }
+  .bar .lbl { font-family:var(--mono); font-size:10.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--text-muted); }
+  .bar .sp { flex:1 1 auto; }
+  .btn { font:600 12.5px var(--font); padding:6px 13px; border-radius:99px; border:1px solid var(--border-strong); background:var(--surface); color:var(--text-secondary); cursor:pointer; }
+  .btn:hover { border-color:var(--accent-blue); color:var(--accent-blue); }
+  .stage { display:flex; align-items:baseline; gap:10px; margin:2rem 0 .7rem; padding-bottom:6px; border-bottom:2px solid var(--border-strong); }
+  .stage-n { font-family:var(--mono); font-size:12px; font-weight:600; color:#FFFFFF; background:var(--accent-blue); border-radius:6px; padding:1px 7px; }
+  .stage-t { font-family:var(--display); font-size:20px; font-weight:700; line-height:1.2; }
+  .stage-w { margin-left:auto; font-size:11.5px; color:var(--text-muted); text-align:right; }
+  .card { background:var(--surface); border:1px solid var(--border-strong); border-radius:12px; padding:14px 16px; margin-bottom:12px; }
+  .card h3 { font-size:13px; font-weight:600; letter-spacing:.02em; margin-bottom:8px; color:var(--text-secondary); }
+  .row { display:flex; flex-wrap:wrap; align-items:center; gap:8px 16px; margin-bottom:10px; }
+  .row:last-child { margin-bottom:0; }
+  .fl { font-size:12.5px; font-weight:600; color:var(--text-secondary); min-width:150px; }
+  .fl small { display:block; font-weight:400; color:var(--text-muted); font-size:11.5px; }
+  input[type=number], select { font:500 15px var(--font); color:var(--text-primary); background:var(--surface); border:1px solid var(--border-strong); border-radius:8px; padding:6px 9px; }
+  input[type=number] { width:108px; text-align:center; }
+  .seg { display:inline-flex; flex-wrap:wrap; border:1px solid var(--border-strong); border-radius:10px; overflow:hidden; }
+  .seg label { position:relative; cursor:pointer; }
+  .seg input { position:absolute; opacity:0; width:1px; height:1px; }
+  .seg span { display:block; padding:6px 13px; font-size:13.5px; font-weight:500; color:var(--text-secondary); border-right:1px solid var(--border); }
+  .seg label:last-child span { border-right:none; }
+  .seg input:checked + span { background:var(--text-primary); color:var(--bg); }
+  .seg input:focus-visible + span { outline:2px solid var(--accent-blue); outline-offset:-2px; }
+  .chk { display:flex; align-items:flex-start; gap:9px; padding:6px 0; font-size:14px; line-height:1.45; border-bottom:1px dashed var(--border); cursor:pointer; }
+  .chk:last-child { border-bottom:none; }
+  .chk input { margin-top:3px; width:17px; height:17px; flex:0 0 auto; accent-color:var(--accent-blue); }
+  .chk small { display:block; color:var(--text-muted); font-size:12px; }
+  .due { display:grid; grid-template-columns:1fr 1fr; gap:0 18px; }
+  .hide { display:none !important; }
+  .esito { display:flex; flex-wrap:wrap; align-items:center; gap:10px 18px; }
+  .big { font-family:var(--display); font-size:40px; font-weight:700; line-height:1.05; }
+  .big small { font-size:19px; font-weight:600; }
+  .cat { display:inline-block; font-size:12.5px; font-weight:600; border-radius:99px; padding:2px 10px; border:1px solid; }
+  .k0 { color:var(--k0); background:var(--k0-bg); border-color:var(--k0-bd); }
+  .k1 { color:var(--k1); background:var(--k1-bg); border-color:var(--k1-bd); }
+  .k2 { color:var(--k2); background:var(--k2-bg); border-color:var(--k2-bd); }
+  .k3 { color:var(--k3); background:var(--k3-bg); border-color:var(--k3-bd); }
+  .k4 { color:var(--k4); background:var(--k4-bg); border-color:var(--k4-bd); }
+  .kx { color:var(--text-muted); background:var(--surface-alt); border-color:var(--border-strong); }
+  .cor { display:inline-block; font-family:var(--mono); font-size:11px; font-weight:600; color:#FFFFFF; border-radius:4px; padding:0 5px; margin:0 1px; white-space:nowrap; vertical-align:1px; }
+  .c1 { background:var(--cor-1); } .c2a { background:var(--cor-2a); color:#1D1602; } .c2b { background:var(--cor-2b); } .c3 { background:var(--cor-3); }
+  .pg { font-family:var(--mono); font-size:11px; color:var(--text-muted); white-space:nowrap; }
+  .nota { border-left:3px solid var(--accent-amber); background:var(--accent-amber-bg); border-radius:0 8px 8px 0; padding:7px 11px; margin-top:8px; font-size:13.5px; }
+  .nota.info { border-left-color:var(--accent-blue); background:var(--accent-blue-bg); }
+  .nota.stop { border-left-color:var(--accent-red); background:var(--accent-red-bg); }
+  .nota.ok { border-left-color:var(--accent-green); background:var(--accent-green-bg); }
+  .nota strong { color:var(--text-primary); }
+  .passo { display:flex; gap:10px; padding:8px 0; border-bottom:1px dashed var(--border); }
+  .passo:last-child { border-bottom:none; }
+  .passo .ico { flex:0 0 22px; font-weight:700; color:var(--accent-blue); text-align:center; }
+  .passo .tx { flex:1 1 auto; font-size:14px; }
+  .limiti li { margin:4px 0 4px 18px; font-size:13.5px; }
+  .foot { margin-top:2.4rem; padding-top:1rem; border-top:1px solid var(--border-strong); font-size:12px; color:var(--text-muted); line-height:1.7; }
+  .foot strong { color:var(--text-secondary); }
+  @media (max-width:640px) {
+    .due { grid-template-columns:1fr; }
+    .headline { font-size:25px; }
+    .stage-w { display:none; }
+    .fl { min-width:0; width:100%; }
+  }
+  @media print { .bar { position:static; } }
+</style>
+<style data-iphone="stile">
+/* L'avviso e' visibile per costruzione: lo nasconde solo la classe che la
+   sentinella mette quando JavaScript esiste, e lo rimostra quando il motore
+   muore. Nell'anteprima dell'iPhone nessuna delle due arriva. */
+#nomotore{background:#FCEBEB;border:1.5px solid #A32D2D;border-radius:10px;
+ padding:12px 15px;margin:0 0 1.1rem;font-size:13.5px;line-height:1.6;color:#0B0B0B;
+ font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+#nomotore strong{display:block;color:#A32D2D;font-size:15px;margin-bottom:4px}
+#nomotore p{margin:6px 0 0}
+#nomotore a{color:#A32D2D}
+#nomotore .nmurl{font-family:'SFMono-Regular',Consolas,Menlo,monospace;font-size:.92em;word-break:break-all}
+#nomotore .nmerr{display:block;font-family:'SFMono-Regular',Consolas,Menlo,monospace;
+ font-size:11.5px;color:#A32D2D;margin-top:6px;word-break:break-word}
+#nomotore .nmerr:empty{display:none}
+html.js #nomotore{display:none}
+html.js.motore-ko #nomotore{display:block}
+
+#nmprivacy{background:#E2F4F5;border:1px solid #A7DBDE;border-radius:8px;padding:9px 13px;
+ margin:0 0 1rem;font-size:12.5px;line-height:1.55;color:#0B0B0B;
+ font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+@media print{#nmprivacy{display:none}}
+</style>
+</head>
+<body>
+<div class="nomotore" id="nomotore" role="alert">
+ <strong>Motore di calcolo non attivo</strong>
+ <p>I calcoli, i filtri e i comandi di questa pagina <b>non funzionano</b>: dove leggi «—» non c'è un
+ valore. Il testo resta leggibile, i numeri che dipendono dai tuoi dati no. Non usare questa pagina
+ per decidere una dose.</p>
+ <p>Su iPhone e iPad succede sempre con un file salvato sul telefono: si apre nell'<b>anteprima</b> —
+ dall'app File, da Mail, da WhatsApp —, che mostra la pagina ma non esegue il motore, e Apple non
+ permette di aprirlo in Safari. Sull'iPhone il tool funziona aperto da questo indirizzo, in Safari: <a class="nmurl" href="https://francescofugetto-ai.github.io/tool-decongestione-web/">https://francescofugetto-ai.github.io/tool-decongestione-web/</a> — poi Condividi, «Aggiungi alla schermata Home». Dopo la prima apertura funziona anche senza rete. Su computer e Android basta aprire il file.</p>
+ <span class="nmerr" id="nmerr"></span>
+</div>
+<div class="nmprivacy" id="nmprivacy">
+ <b>Quello che scrivi resta su questo dispositivo.</b> La pagina non invia niente in rete e non
+ salva niente: nessun dato esce da qui. Per la stessa ragione, <b>chiudendola il contenuto si
+ perde</b> — copia il referto dove ti serve prima di chiudere.
+</div>
+<div class="page">
+
+<header class="hero">
+  <div class="kicker">Strumento · Scompenso decompensato · ESC 2026</div>
+  <h1 class="headline">Decongestione nel DHF — dose, risposta, passo successivo</h1>
+  <p class="lede"><strong>Come si usa.</strong> Il passo 1 dà la <strong>dose EV iniziale</strong>. Il passo 2 legge la <strong>risposta</strong> agli orari che la linea guida fissa — sodio urinario a 2 ore, diuresi nelle prime 6 ore — e dice se ripetere, raddoppiare o aggiungere. Il passo 3 è il bilancio delle <strong>24 ore</strong> e l'escalation. Il passo 4 ricorda i controlli e la terapia di fondo. <strong>Azzera</strong>, in alto, ricomincia.</p>
+  <div class="meta-row">
+    <span class="meta-chip"><strong>Fonte</strong> 2026 ESC Guidelines for the management of heart failure</span>
+    <span class="meta-chip"><strong>Da</strong> Fig. 15 (p. 49) · §7.5.3–7.5.4 (p. 48) · Rec. Table 9 (pp. 50–51) · Tab. S13 (Suppl. pp. S24–S25)</span>
+    <span class="meta-chip"><strong>Non</strong> sostituisce il giudizio clinico né la scheda tecnica</span>
+  </div>
+</header>
+
+<div class="bar" id="bar" aria-live="polite">
+  <span class="lbl">Dose EV ora</span> <span id="barDose" class="cat kx">—</span>
+  <span class="lbl">Risposta</span> <span id="barRisp" class="cat kx">—</span>
+  <span class="sp"></span>
+  <button class="btn" id="azzera" type="button">Azzera</button>
+</div>
+
+<div class="stage"><span class="stage-n">1</span><span class="stage-t">La dose iniziale</span><span class="stage-w">Fig. 15, p. 49 · §7.5.3, p. 48</span></div>
+
+<div class="card">
+  <div class="row">
+    <span class="fl">Diuretico d'ansa a domicilio</span>
+    <span class="seg">
+      <label><input type="radio" name="naive" value="si"><span>mai assunto</span></label>
+      <label><input type="radio" name="naive" value="no"><span>già in terapia</span></label>
+    </span>
+  </div>
+  <div class="row" id="rigaOrale">
+    <span class="fl">Dose orale abituale <small>furosemide, mg al giorno</small></span>
+    <input type="number" id="orale" min="0" max="1000" step="10" inputmode="numeric" placeholder="es. 40">
+  </div>
+  <div class="row">
+    <span class="fl">eGFR <small>mL/min/1.73 m²</small></span>
+    <input type="number" id="egfr" min="1" max="200" step="1" inputmode="numeric" placeholder="es. 45">
+    <span class="fl">K⁺ <small>mmol/L</small></span>
+    <input type="number" id="k" min="2" max="9" step="0.1" inputmode="decimal" placeholder="es. 3.8">
+    <span class="fl">Na⁺ <small>mmol/L</small></span>
+    <input type="number" id="na" min="100" max="160" step="1" inputmode="numeric" placeholder="es. 138">
+  </div>
+  <div class="row">
+    <span class="fl">Bicarbonati <small>mmol/L</small></span>
+    <input type="number" id="hco3" min="10" max="50" step="1" inputmode="numeric" placeholder="es. 26">
+    <label class="chk" style="border:none"><input type="checkbox" id="ckdSevera"><span>Funzione renale gravemente compromessa<small>la fonte non le dà un valore di eGFR: lo giudichi chi prescrive</small></span></label>
+  </div>
+  <div class="card" id="outDose" style="margin:6px 0 0"></div>
+</div>
+
+<div class="stage"><span class="stage-n">2</span><span class="stage-t">La risposta, agli orari della fonte</span><span class="stage-w">uNa⁺ a 2 h · diuresi a 6 h</span></div>
+
+<div class="card">
+  <div class="row">
+    <span class="fl">Na⁺ urinario spot a 2 h <small>mmol/L</small></span>
+    <input type="number" id="una" min="0" max="300" step="1" inputmode="numeric" placeholder="es. 85">
+    <span class="fl">Diuresi nelle prime 6 h <small>mL/h</small></span>
+    <input type="number" id="diuresi6" min="0" max="1000" step="10" inputmode="numeric" placeholder="es. 120">
+  </div>
+  <div class="row">
+    <span class="fl">Dose EV già data oggi <small>furosemide, mg</small></span>
+    <input type="number" id="evOggi" min="0" max="2000" step="10" inputmode="numeric" placeholder="es. 80">
+  </div>
+  <div class="card" id="outRisposta" style="margin:6px 0 0"></div>
+</div>
+
+<div class="stage"><span class="stage-n">3</span><span class="stage-t">Il bilancio a 24 ore, e l'escalation</span></div>
+
+<div class="card">
+  <div class="row">
+    <span class="fl">Diuresi delle 24 h <small>litri</small></span>
+    <input type="number" id="diuresi24" min="0" max="15" step="0.1" inputmode="decimal" placeholder="es. 2.4">
+    <span class="fl">Congestione</span>
+    <span class="seg">
+      <label><input type="radio" name="congestione" value="si"><span>persiste</span></label>
+      <label><input type="radio" name="congestione" value="no"><span>risolta</span></label>
+    </span>
+  </div>
+  <div class="card" id="outGiorno2" style="margin:6px 0 0"></div>
+</div>
+
+<div class="stage"><span class="stage-n">4</span><span class="stage-t">Controlli, terapia di fondo, limiti</span></div>
+<div class="card"><h3>A ogni giro</h3><div id="controlli"></div></div>
+<div class="card"><h3>Che cosa la fonte non dice</h3><ul class="limiti" id="limiti"></ul></div>
+
+<div class="foot">
+  <strong>Fonte:</strong> 2026 ESC Guidelines for the management of heart failure — Fig. 15 e note a–e (p. 49), §7.5.3–7.5.5 (p. 48), Recommendation Table 9 (pp. 50–51), §8.2.1 (p. 54) e Supplementary data, Tab. S13 (pp. S24–S25).<br><br>
+  Strumento personale di studio e consultazione: <strong>non sostituisce il giudizio clinico né la scheda tecnica</strong>. Ogni numero viene dalla linea guida, con la pagina accanto; dove la linea guida non dà un numero, lo strumento lo dichiara e non lo inventa.
+</div>
+
+</div>
+<script>
+(function () {
+  "use strict";
+
+  /* ═══ DATI ═══════════════════════════════════════════════════════════════
+     Tutti i numeri vengono dalla fonte, con la pagina accanto:
+     - 40 mg EV nel paziente naïve ai diuretici, doppio della dose orale
+       abituale in chi li assume gia'           ESC 2026, p. 48 e Fig. 15, p. 49
+     - risposta adeguata: uNa+ a 2 h ≥70 mmol/L OPPURE diuresi ≥100 mL/h
+       nelle prime 6 h                                          Fig. 15, p. 49
+     - ripetere lo schema ogni 12 h fino alla decongestione completa
+     - risposta insufficiente: raddoppiare la dose EV e/o aggiungere un
+       diuretico non d'ansa                             p. 48 e Fig. 15, p. 49
+     - acetazolamide 500 mg EV una volta al giorno; idroclorotiazide per
+       eGFR: >50 → 25 mg, 20–50 → 50 mg, <20 → 100 mg    Fig. 15 nota c, p. 49
+     - dose massima EV: furosemide 600 mg/die, fino a 1000 mg con funzione
+       renale gravemente compromessa                    Fig. 15 nota d, p. 49
+     - dopo 24 h si guarda la diuresi totale: sotto 3 L con congestione
+       persistente si sale ancora                       Fig. 15 nota b, p. 49
+     - creatinina ed elettroliti almeno ogni 24 h                Fig. 15, p. 49 */
+  var MAX_STD = 600, MAX_CKD = 1000, NAIVE = 40, UNA_OK = 70, DIU_OK = 100, DIU24 = 3;
+
+  /* ═══ FUNZIONI PURE ═══════════════════════════════════════════════════ */
+
+  /* Dose EV iniziale. Nel paziente in terapia cronica il doppio della dose
+     orale abituale; nel naïve 40 mg. «Dose iniziale piu' alta in CKD»
+     (Fig. 15, nota a) non ha un numero nella fonte, e qui non se ne inventa
+     uno: lo strumento lo dice e basta. */
+  function doseIniziale(s) {
+    if (s.naive === "si") return { mg:NAIVE, come:"paziente naïve ai diuretici", pag:"p. 48" };
+    if (s.naive === "no") {
+      if (s.orale === null || s.orale <= 0) return { mg:null, come:"serve la dose orale abituale", pag:"p. 48" };
+      return { mg:s.orale * 2, come:"il doppio della dose orale abituale (" + nf(s.orale) + " mg)", pag:"p. 48" };
+    }
+    return { mg:null, come:"dì se il paziente assumeva già un diuretico d'ansa", pag:"p. 48" };
+  }
+
+  /* Tetto giornaliero della via endovenosa. */
+  function tetto(s) { return s.ckdSevera ? MAX_CKD : MAX_STD; }
+
+  /* Risposta diuretica: basta uno dei due criteri. */
+  function risposta(s) {
+    var haUna = s.una !== null, haDiu = s.diuresi6 !== null;
+    if (!haUna && !haDiu) return { stato:null, motivo:"servono il sodio urinario a 2 h o la diuresi delle prime 6 h" };
+    var okUna = haUna && s.una >= UNA_OK, okDiu = haDiu && s.diuresi6 >= DIU_OK;
+    if (okUna || okDiu) return { stato:true, per:okUna ? "uNa⁺ " + nf(s.una) + " mmol/L a 2 h (≥70)" : "diuresi " + nf(s.diuresi6) + " mL/h a 6 h (≥100)" };
+    if (!haUna || !haDiu) return { stato:false, parziale:true, per:(haUna ? "uNa⁺ " + nf(s.una) + " mmol/L a 2 h" : "diuresi " + nf(s.diuresi6) + " mL/h a 6 h") + " sotto soglia; l'altro criterio non è stato inserito" };
+    return { stato:false, per:"uNa⁺ " + nf(s.una) + " mmol/L e diuresi " + nf(s.diuresi6) + " mL/h: nessuno dei due criteri" };
+  }
+
+  /* Dose successiva quando la risposta non basta: raddoppio, con il tetto. */
+  function raddoppio(dataOggi, s) {
+    if (dataOggi === null || dataOggi <= 0) return null;
+    var t = tetto(s), d = dataOggi * 2;
+    return { mg:Math.min(d, t), tetto:t, tagliato:d > t };
+  }
+
+  /* Il diuretico non d'ansa da aggiungere, con la dose. La scelta fra
+     acetazolamide e tiazidico segue i criteri della fonte. */
+  function addOn(s) {
+    var voci = [];
+    var hctz = null;
+    if (s.egfr !== null) hctz = s.egfr > 50 ? 25 : (s.egfr >= 20 ? 50 : 100);
+    voci.push({
+      nome:"Acetazolamide EV", dose:"500 mg una volta al giorno", pag:"Fig. 15, nota c, p. 49",
+      per:(s.egfr !== null && s.egfr < 30 ? "preferibile nella CKD più avanzata" : "") +
+          (s.hco3 !== null && s.hco3 >= 27 ? (s.egfr !== null && s.egfr < 30 ? "; " : "") + "farmaco di scelta da associare all'ansa con alcalosi metabolica (bicarbonati ≥27 mmol/L)" : "")
+    });
+    voci.push({
+      nome:"Idroclorotiazide per os", dose:hctz === null ? "dose per fascia di eGFR: serve l'eGFR" : nf(hctz) + " mg al giorno (eGFR " + (s.egfr > 50 ? ">50" : (s.egfr >= 20 ? "20–50" : "<20")) + ")",
+      pag:"Fig. 15, nota c, p. 49",
+      per:"più diuresi, ma più peggioramento della funzione renale e più ipokaliemia (CLOROTIC, p. 48)" +
+          (s.k !== null && s.k <= 3.5 ? " — <b>qui il potassio è basso</b>" : "") +
+          (s.k !== null && s.k <= 3.5 && s.na !== null && s.na < 135 ? "; con ipokaliemia e iponatriemia insieme la Tab. S13 dice di evitarla" : "")
+    });
+    return voci;
+  }
+
+  /* ═══ STATO E DISEGNO ═════════════════════════════════════════════════ */
+  function el(id) { return document.getElementById(id); }
+  function ck(id) { var e = el(id); return !!(e && e.checked); }
+  function num(id) {
+    var e = el(id); if (!e) return null;
+    var v = e.value.replace(",", ".").trim();
+    if (v === "") return null;
+    var n = parseFloat(v);
+    return isFinite(n) ? n : null;
+  }
+  function radio(n) { var e = document.querySelector('input[name="' + n + '"]:checked'); return e ? e.value : ""; }
+  function nf(v) { return String(Math.round(v * 100) / 100).replace(".", ","); }
+  function pgs(p) { return ' <span class="pg">' + p + "</span>"; }
+  function corPill(c, l) { var k = { "I":"c1", "IIa":"c2a", "IIb":"c2b", "III":"c3" }[c]; return '<span class="cor ' + k + '">' + c + "</span>" + (l ? ' <span class="cor ' + k + '" style="opacity:.85">' + l + "</span>" : ""); }
+  function nota(g, t) { return '<div class="nota ' + (g || "") + '">' + t + "</div>"; }
+  function passo(i, t) { return '<div class="passo"><span class="ico">' + i + '</span><span class="tx">' + t + "</span></div>"; }
+
+  function S() {
+    return {
+      naive:radio("naive"), orale:num("orale"), egfr:num("egfr"), k:num("k"), na:num("na"),
+      hco3:num("hco3"), ckdSevera:ck("ckdSevera"), una:num("una"), diuresi6:num("diuresi6"),
+      evOggi:num("evOggi"), diuresi24:num("diuresi24"), congestione:radio("congestione")
+    };
+  }
+
+  function disegna() {
+    var s = S();
+    el("rigaOrale").className = s.naive === "si" ? "row hide" : "row";
+
+    /* 1 · dose iniziale */
+    var di = doseIniziale(s), h = "";
+    if (di.mg === null) {
+      h += '<div class="esito"><span class="big">—</span><span class="cat kx">' + di.come + "</span></div>";
+    } else {
+      h += '<div class="esito"><span class="big">' + nf(di.mg) + ' <small>mg EV</small></span><span class="cat k1">' + di.come + "</span></div>";
+      h += '<div class="muted" style="font-size:13px;margin-top:4px">Furosemide o equivalente' + pgs(di.pag) + " · diuretico d'ansa EV in tutti i pazienti con DHF ricoverati con sovraccarico di volume " + corPill("I", "A") + pgs("Rec. Table 9, p. 50") + "</div>";
+      if (di.mg > tetto(s)) h += nota("stop", "Questa dose supera già il tetto giornaliero della via endovenosa (" + nf(tetto(s)) + " mg): rivedere la dose orale inserita." + pgs("Fig. 15, nota d, p. 49"));
+    }
+    h += nota("info", "<b>Bolo o infusione continua:</b> la fonte non ha trovato differenze di esito fra le due vie, né superiorità di un diuretico d'ansa sugli altri." + pgs("p. 48"));
+    if (s.egfr !== null && s.egfr < 60) h += nota("", "La Fig. 15 chiede una <b>dose iniziale più alta nella CKD</b>, senza dire di quanto: la fonte non pubblica un numero, e questo strumento non lo inventa." + pgs("Fig. 15, nota a, p. 49"));
+    el("outDose").innerHTML = h;
+
+    /* 2 · risposta */
+    var r = risposta(s), h2 = "", dosePer = s.evOggi !== null ? s.evOggi : di.mg;
+    if (r.stato === null) {
+      h2 += '<div class="esito"><span class="cat kx">risposta —</span><span class="muted">' + r.motivo + "</span></div>";
+      h2 += nota("info", "La risposta è adeguata con <b>uNa⁺ ≥70 mmol/L a 2 ore</b> <b>oppure</b> <b>diuresi ≥100 mL/h nelle prime 6 ore</b>: ne basta uno." + pgs("Fig. 15, p. 49"));
+    } else if (r.stato === true) {
+      h2 += '<div class="esito"><span class="cat k0">risposta adeguata</span><span class="muted">' + r.per + "</span></div>";
+      h2 += passo("→", "<b>Ripeti lo stesso schema ogni 12 ore</b> fino alla decongestione completa." + pgs("Fig. 15, p. 49"));
+    } else {
+      h2 += '<div class="esito"><span class="cat k3">risposta insufficiente</span><span class="muted">' + r.per + "</span></div>";
+      var rd = raddoppio(dosePer, s);
+      if (rd === null) h2 += passo("→", "<b>Raddoppia la dose EV</b> del diuretico d'ansa, <b>e/o aggiungi</b> un diuretico non d'ansa. Inserisci la dose EV già data oggi per vedere il numero." + pgs("p. 48"));
+      else {
+        h2 += passo("→", "<b>Raddoppia a " + nf(rd.mg) + " mg EV</b>" + (rd.tagliato ? " — il raddoppio supererebbe il tetto di " + nf(rd.tetto) + " mg/die, quindi si ferma lì" : "") + ", <b>e/o aggiungi</b> un diuretico non d'ansa." + pgs("p. 48 · Fig. 15, p. 49"));
+      }
+      var ad = addOn(s);
+      for (var i = 0; i < ad.length; i++) {
+        h2 += passo("+", "<b>" + ad[i].nome + "</b> — " + ad[i].dose + pgs(ad[i].pag) + (ad[i].per ? '<div class="muted" style="font-size:13px">' + ad[i].per + "</div>" : ""));
+      }
+      h2 += '<div class="muted" style="font-size:13px;margin-top:6px">Aggiunta a breve termine di acetazolamide EV o idroclorotiazide orale in chi è già in diuretico d\'ansa ' + corPill("IIa", "B1") + pgs("Rec. Table 9, p. 50") + "</div>";
+      if (r.parziale) h2 += nota("", "Un solo criterio è stato inserito: basterebbe l'altro per dire che la risposta è adeguata." + pgs("Fig. 15, p. 49"));
+    }
+    el("outRisposta").innerHTML = h2;
+
+    /* 3 · 24 ore */
+    var h3 = "";
+    if (s.diuresi24 === null && s.congestione === "") {
+      h3 += '<div class="muted">Dopo 24 ore di trattamento si guarda la <b>diuresi totale</b>: sotto 3 litri con congestione ancora presente si sale ancora, il secondo giorno.' + pgs("Fig. 15, nota b, p. 49") + "</div>";
+    } else if (s.congestione === "no") {
+      h3 += '<div class="esito"><span class="cat k0">decongestione raggiunta</span></div>';
+      h3 += passo("→", "Si passa alla fase di stabilizzazione: <b>avvio e ottimizzazione della terapia di fondo</b>, e prima della dimissione si esclude la congestione persistente " + corPill("I", "C") + pgs("Rec. Table 8, p. 47") + ".");
+    } else {
+      var poco = s.diuresi24 !== null && s.diuresi24 < DIU24;
+      h3 += '<div class="esito"><span class="cat ' + (poco ? "k3" : "k2") + '">congestione persistente</span><span class="muted">' + (s.diuresi24 === null ? "diuresi delle 24 h non inserita" : "diuresi " + nf(s.diuresi24) + " L nelle 24 h") + "</span></div>";
+      if (poco) h3 += passo("→", "Diuresi sotto <b>3 litri</b> con congestione: <b>ulteriore escalation</b> nel secondo giorno." + pgs("Fig. 15, nota b, p. 49"));
+      h3 += passo("↑", "Escalation progressiva del diuretico d'ansa <b>fino alla dose EV massima</b> (" + nf(tetto(s)) + " mg/die" + (s.ckdSevera ? ", perché la funzione renale è gravemente compromessa" : "; fino a 1000 mg con funzione renale gravemente compromessa") + ")" + pgs("Fig. 15, nota d, p. 49") + ", <b>e</b> aggiunta di diuretici non d'ansa.");
+      h3 += passo("⇢", "Se la decongestione fallisce nonostante la terapia diuretica massimale: <b>ultrafiltrazione</b> " + corPill("IIb", "C") + pgs("p. 54") + " — la fonte la dà per opzione dal ruolo incerto, in pazienti selezionati.");
+    }
+    el("outGiorno2").innerHTML = h3;
+
+    /* 4 · controlli */
+    var c = "";
+    c += passo("1", "<b>Creatinina ed elettroliti almeno ogni 24 ore</b>, e controllo frequente di pressione e segni di ipoperfusione." + pgs("Fig. 15, p. 49"));
+    c += passo("2", "Piccoli aumenti transitori della creatinina <b>non peggiorano la prognosi</b> se la decongestione riesce: non sono da soli un motivo per fermarsi." + pgs("p. 48"));
+    if (s.k !== null && s.k <= 3.5) c += passo("3", "Potassio " + nf(s.k) + " mmol/L: la Fig. 15 chiede di considerare un <b>MRA e supplementi di potassio</b> in caso di ipokaliemia." + pgs("Fig. 15, nota e, p. 49"));
+    c += passo(s.k !== null && s.k <= 3.5 ? "4" : "3", "<b>Terapia di fondo:</b> avvio in ospedale dell'SGLT2-i dopo la stabilizzazione iniziale " + corPill("I", "B1") + pgs("Rec. Table 9, p. 51") + "; la FMT già in corso non si sospende senza segni chiari di ipoperfusione." + pgs("p. 45"));
+    c += passo(s.k !== null && s.k <= 3.5 ? "5" : "4", "Prima della dimissione: <b>avvio e titolazione rapida della FMT</b> e visite ravvicinate nelle prime 6 settimane " + corPill("I", "B2") + pgs("Rec. Table 8, p. 47") + ".");
+    el("controlli").innerHTML = c;
+
+    /* limiti */
+    var lim = [];
+    lim.push("Di quanto alzare la <b>dose iniziale nella CKD</b>: la nota a della Fig. 15 lo chiede, ma non lo quantifica.");
+    lim.push("Che cosa sia una <b>funzione renale gravemente compromessa</b>, che porta il tetto da 600 a 1000 mg: la fonte non le dà un valore di eGFR.");
+    lim.push("Il <b>metolazone</b> compare a 2.5–5 mg nel testo della decongestione ambulatoriale (p. 48) e a 2.5 → 2.5–10 mg, massimo 20, nella Tab. S13 (p. S24): due intervalli diversi, non conciliati.");
+    lim.push("Le soglie di eGFR dell'idroclorotiazide sono in mL/min/1.73 m² nella Fig. 15 (p. 49) e in mL/min nella Tab. S13 (p. S24).");
+    lim.push("La terapia guidata dal <b>sodio urinario</b> è " + corPill("IIb", "B1") + pgs("Rec. Table 9, p. 50") + ": nessun trial ha mostrato un beneficio su mortalità o riospedalizzazione, solo su natriuresi e diuresi.");
+    lim.push("Fuori dall'algoritmo restano lo <b>shock cardiogeno</b> e lo scompenso destro con ridotta riserva di precarico, dove la strategia è un'altra." + pgs("pp. 46, 51"));
+    el("limiti").innerHTML = "<li>" + lim.join("</li><li>") + "</li>";
+
+    /* barra */
+    function chip(id, k, t) { var e = el(id); e.className = "cat " + k; e.innerHTML = t; }
+    chip("barDose", di.mg === null ? "kx" : "k1", di.mg === null ? "—" : nf(di.mg) + " mg EV");
+    chip("barRisp", r.stato === null ? "kx" : (r.stato ? "k0" : "k3"), r.stato === null ? "—" : (r.stato ? "adeguata" : "insufficiente"));
+  }
+
+  document.addEventListener("input", disegna);
+  document.addEventListener("change", disegna);
+  el("azzera").addEventListener("click", function () {
+    var ins = document.querySelectorAll("input");
+    for (var i = 0; i < ins.length; i++) {
+      if (ins[i].type === "checkbox" || ins[i].type === "radio") ins[i].checked = false;
+      else ins[i].value = "";
+    }
+    disegna();
+    window.scrollTo(0, 0);
+  });
+
+  window.DECONG_MOTORE = { doseIniziale:doseIniziale, risposta:risposta, raddoppio:raddoppio, addOn:addOn, tetto:tetto };
+  disegna();
+})();
+</script>
+<script data-iphone="web">
+// Solo da un indirizzo https, cioe' dalla pagina pubblicata: aperto come file
+// il tool non cerca ne' manifest ne' service worker, che accanto al file non
+// ci sono. Un errore qui non deve fermare niente: e' un di piu'.
+(function(){
+if(location.protocol!=="https:") return;
+try{
+  var t=document.getElementsByTagName("head")[0];
+  var m=document.createElement("link"); m.rel="manifest"; m.href="manifest.webmanifest";
+  var i=document.createElement("link"); i.rel="apple-touch-icon"; i.href="icona-180.png";
+  t.appendChild(m); t.appendChild(i);
+  if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js")["catch"](function(){});
+}catch(e){}
+})();
+</script>
+<script data-iphone="fine">document.documentElement.className+=" motore-ok";</script>
+</body>
+</html>
